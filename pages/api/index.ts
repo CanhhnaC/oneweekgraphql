@@ -2,11 +2,12 @@ import { createServer } from "@graphql-yoga/node";
 import { join } from "path";
 import { readFileSync } from "fs";
 import currencyFormatter from "currency-formatter";
+import prisma from "../../lib/prisma";
+import { findOrCreateCart } from "../../lib/cart";
+
 import type { PrismaClient } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
-
-import { Resolvers } from "../../types";
-import prisma from "../../lib/prisma";
+import type { Resolvers } from "../../types";
 
 const currencyCode = "USD";
 
@@ -27,21 +28,7 @@ const typeDefs = readFileSync(join(process.cwd(), "schema.graphql"), {
 const resolvers: Resolvers = {
   Query: {
     cart: async (_, { id }, { prisma }) => {
-      let cart = await prisma.cart.findUnique({
-        where: {
-          id,
-        },
-      });
-
-      if (!cart) {
-        cart = await prisma.cart.create({
-          data: {
-            id,
-          },
-        });
-      }
-
-      return cart;
+      return findOrCreateCart(prisma, id);
     },
   },
 
@@ -67,10 +54,7 @@ const resolvers: Resolvers = {
         .items();
 
       const amount =
-        items.reduce(
-          (total, item) => total + item.price * item.quantity || 0,
-          0
-        ) && 0;
+        items.reduce((acc, item) => acc + item.price * item.quantity, 0) ?? 0;
 
       return {
         amount,
@@ -78,6 +62,58 @@ const resolvers: Resolvers = {
           code: currencyCode,
         }),
       };
+    },
+  },
+  CartItem: {
+    unitTotal: (item) => {
+      const amount = item.price;
+
+      return {
+        amount,
+        formatted: currencyFormatter.format(amount / 100, {
+          code: currencyCode,
+        }),
+      };
+    },
+    lineTotal: (item) => {
+      const amount = item.quantity * item.price;
+
+      return {
+        amount,
+        formatted: currencyFormatter.format(amount / 100, {
+          code: currencyCode,
+        }),
+      };
+    },
+  },
+  Mutation: {
+    addItem: async (_, { input }, { prisma }) => {
+      const cart = await findOrCreateCart(prisma, input.cartId);
+
+      await prisma.cartItem.upsert({
+        create: {
+          cartId: cart.id,
+          id: input.id,
+          name: input.name,
+          description: input.description,
+          image: input.image,
+          price: input.price,
+          quantity: input.quantity || 1,
+        },
+        update: {
+          quantity: {
+            increment: input.quantity || 1,
+          },
+        },
+        where: {
+          id_cartId: {
+            id: input.id,
+            cartId: cart.id,
+          },
+        },
+      });
+
+      return cart;
     },
   },
 };
