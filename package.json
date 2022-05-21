@@ -18,6 +18,7 @@
     "currency-formatter": "^1.5.9",
     "graphql": "16.5.0",
     "next": "12.1.6",
+    "raw-body": "2.5.1",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "stripe": "9.2.0"
