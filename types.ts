@@ -45,6 +45,11 @@ export type CartItem = {
   unitTotal: Money;
 };
 
+export type DecreaseCartItem = {
+  cartId: Scalars['ID'];
+  id: Scalars['ID'];
+};
+
 export type IncreaseCartItemInput = {
   cartId: Scalars['ID'];
   id: Scalars['ID'];
@@ -59,6 +64,7 @@ export type Money = {
 export type Mutation = {
   __typename?: 'Mutation';
   addItem?: Maybe<Cart>;
+  decreaseCartItem?: Maybe<Cart>;
   increaseCartItem?: Maybe<Cart>;
   removeItem?: Maybe<Cart>;
 };
@@ -66,6 +72,11 @@ export type Mutation = {
 
 export type MutationAddItemArgs = {
   input: AddToCartInput;
+};
+
+
+export type MutationDecreaseCartItemArgs = {
+  input: DecreaseCartItem;
 };
 
 
@@ -166,6 +177,7 @@ export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Cart: ResolverTypeWrapper<CartModel>;
   CartItem: ResolverTypeWrapper<CartItemModel>;
+  DecreaseCartItem: DecreaseCartItem;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   IncreaseCartItemInput: IncreaseCartItemInput;
   Int: ResolverTypeWrapper<Scalars['Int']>;
@@ -182,6 +194,7 @@ export type ResolversParentTypes = {
   Boolean: Scalars['Boolean'];
   Cart: CartModel;
   CartItem: CartItemModel;
+  DecreaseCartItem: DecreaseCartItem;
   ID: Scalars['ID'];
   IncreaseCartItemInput: IncreaseCartItemInput;
   Int: Scalars['Int'];
@@ -219,6 +232,7 @@ export type MoneyResolvers<ContextType = GraphQLContext, ParentType extends Reso
 
 export type MutationResolvers<ContextType = GraphQLContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   addItem?: Resolver<Maybe<ResolversTypes['Cart']>, ParentType, ContextType, RequireFields<MutationAddItemArgs, 'input'>>;
+  decreaseCartItem?: Resolver<Maybe<ResolversTypes['Cart']>, ParentType, ContextType, RequireFields<MutationDecreaseCartItemArgs, 'input'>>;
   increaseCartItem?: Resolver<Maybe<ResolversTypes['Cart']>, ParentType, ContextType, RequireFields<MutationIncreaseCartItemArgs, 'input'>>;
   removeItem?: Resolver<Maybe<ResolversTypes['Cart']>, ParentType, ContextType, RequireFields<MutationRemoveItemArgs, 'input'>>;
 };
