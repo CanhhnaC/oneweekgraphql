@@ -1,3 +1,6 @@
+import { useMemo } from "react";
+import { ApolloClient, InMemoryCache } from "@apollo/client";
+
 const protocol = `${
   process.env.NODE_ENV === "development" ? "http" : "https"
 }://`;
@@ -9,3 +12,16 @@ const host =
       window.location.host;
 
 export const origin = `${protocol}${host}`;
+
+export const useClient = () => {
+  const client = useMemo(
+    () =>
+      new ApolloClient({
+        uri: `${origin}/api`,
+        cache: new InMemoryCache(),
+      }),
+    []
+  );
+
+  return client;
+};
