@@ -10,7 +10,15 @@ import {
   useRemoveFromCartMutation,
 } from "@@types";
 
-export function CartItem({ item, cartId }: { item: CartItem; cartId: string }) {
+export function CartItem({
+  item,
+  cartId,
+  isReadOnly,
+}: {
+  item: CartItem;
+  cartId: string;
+  isReadOnly?: boolean;
+}) {
   const [increaseCartItem, { loading: increasingCartItem }] =
     useIncreaseCartItemMutation({
       refetchQueries: [GetCartDocument],
@@ -60,31 +68,37 @@ export function CartItem({ item, cartId }: { item: CartItem; cartId: string }) {
         </div>
       </div>
       <div className="flex gap-2">
-        <button
-          onClick={handleClickRemove}
-          disabled={removingFromCart}
-          className="p-1 font-light border border-neutral-700  hover:bg-black hover:text-white"
-        >
-          <CloseIcon />
-        </button>
+        {!isReadOnly && (
+          <button
+            onClick={handleClickRemove}
+            disabled={removingFromCart}
+            className="p-1 font-light border border-neutral-700  hover:bg-black hover:text-white"
+          >
+            <CloseIcon />
+          </button>
+        )}
         <div className="flex-1 flex">
           <div className="px-2 py-1 font-light border border-t-neutral-700 flex-1">
             {item.quantity}
           </div>
-          <button
-            onClick={handleClickDecrease}
-            disabled={decreasingCartItem}
-            className="p-1 font-light border border-neutral-700 hover:bg-black"
-          >
-            <MinusIcon />
-          </button>
-          <button
-            onClick={handleClickIncrease}
-            disabled={increasingCartItem}
-            className="p-1 font-light border border-neutral-700 hover:bg-black"
-          >
-            <PlusIcon />
-          </button>
+          {!isReadOnly && (
+            <>
+              <button
+                onClick={handleClickDecrease}
+                disabled={decreasingCartItem}
+                className="p-1 font-light border border-neutral-700 hover:bg-black"
+              >
+                <MinusIcon />
+              </button>
+              <button
+                onClick={handleClickIncrease}
+                disabled={increasingCartItem}
+                className="p-1 font-light border border-neutral-700 hover:bg-black"
+              >
+                <PlusIcon />
+              </button>
+            </>
+          )}
         </div>
       </div>
     </div>
