@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ShoppingCartIcon } from "./ShoppingCartIcon";
+import { ShoppingCartIcon } from "components/icons/ShoppingCartIcon";
 
 export function Header() {
   return (

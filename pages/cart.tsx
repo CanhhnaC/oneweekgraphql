@@ -1,7 +1,7 @@
 import { getCartId } from "../lib/cart.client";
 import { useGetCartQuery } from "../types";
-import { Header } from "../components/Header";
-import { CartDetail } from "../components/CartDetail";
+import { Header } from "components/ui/Header";
+import { CartDetail } from "components/cart/CartDetail";
 
 import type { GetServerSideProps, NextPage } from "next";
 

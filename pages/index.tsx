@@ -1,6 +1,6 @@
-import { Header } from "../components/Header";
-import { Product, products } from "../lib/products";
-import { ProductList } from "../components/ProductList";
+import { Header } from "components/ui/Header";
+import { ProductList } from "components/product/ProductList";
+import { Product, products } from "lib/products";
 
 import type { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 

@@ -1,8 +1,8 @@
 import { getCookie } from "cookies-next";
-import { GetCartDocument, useAddToCartMutation } from "../types";
+import { GetCartDocument, useAddToCartMutation } from "types";
 import { ProductItem } from "./ProductItem";
 
-import type { Product } from "../lib/products";
+import type { Product } from "lib/products";
 
 export function ProductDetail({ product }: { product: Product | null }) {
   const cartId = String(getCookie("cartId"));
@@ -25,7 +25,7 @@ export function ProductDetail({ product }: { product: Product | null }) {
       },
     });
   }
-  
+
   if (!product) {
     return null;
   }

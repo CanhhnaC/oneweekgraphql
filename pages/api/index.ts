@@ -2,15 +2,15 @@ import { createServer, GraphQLYogaError } from "@graphql-yoga/node";
 import { join } from "path";
 import { readFileSync } from "fs";
 import currencyFormatter from "currency-formatter";
-import prisma from "../../lib/prisma";
-import { findOrCreateCart, validateCartItems } from "../../lib/cart";
-import { stripe } from "../../lib/stripe";
-import { origin } from "../../lib/client";
-import { products } from "../../lib/products";
+import prisma from "lib/prisma";
+import { findOrCreateCart, validateCartItems } from "lib/cart";
+import { stripe } from "lib/stripe";
+import { origin } from "lib/client";
+import { products } from "lib/products";
 
 import type { PrismaClient } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { Resolvers } from "../../types";
+import type { Resolvers } from "types";
 
 const currencyCode = "USD";
 

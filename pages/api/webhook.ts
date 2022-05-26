@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import getRawBody from "raw-body";
 import Stripe from "stripe";
-import { stripe } from "../../lib/stripe";
+import { stripe } from "lib/stripe";
 
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 

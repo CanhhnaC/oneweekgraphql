@@ -6,7 +6,7 @@ type Mutation {
   addItem(input: AddToCartInput!): Cart
   removeItem(input: RemoveFromCartInput!): Cart
   increaseCartItem(input: IncreaseCartItemInput!): Cart
-  decreaseCartItem(input: DecreaseCartItem!): Cart
+  decreaseCartItem(input: DecreaseCartItemInput!): Cart
   createCheckoutSession(input: CreateCheckoutSessionInput!): CheckoutSession
 }
 
@@ -57,7 +57,7 @@ input IncreaseCartItemInput {
   cartId: ID!
 }
 
-input DecreaseCartItem {
+input DecreaseCartItemInput {
   id: ID!
   cartId: ID!
 }

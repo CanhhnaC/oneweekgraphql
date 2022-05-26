@@ -58,7 +58,7 @@ export type CreateCheckoutSessionInput = {
   cartId: Scalars['ID'];
 };
 
-export type DecreaseCartItem = {
+export type DecreaseCartItemInput = {
   cartId: Scalars['ID'];
   id: Scalars['ID'];
 };
@@ -95,7 +95,7 @@ export type MutationCreateCheckoutSessionArgs = {
 
 
 export type MutationDecreaseCartItemArgs = {
-  input: DecreaseCartItem;
+  input: DecreaseCartItemInput;
 };
 
 
@@ -132,12 +132,26 @@ export type AddToCartMutation = { __typename?: 'Mutation', addItem?: { __typenam
 
 export type CartFragment = { __typename?: 'Cart', id: string, totalItems: number, subTotal: { __typename?: 'Money', formatted: string }, items: Array<{ __typename?: 'CartItem', id: string, name: string, description?: string | null, image?: string | null, quantity: number, unitTotal: { __typename?: 'Money', formatted: string, amount: number }, lineTotal: { __typename?: 'Money', formatted: string, amount: number } }> };
 
+export type DecreaseCartItemMutationVariables = Exact<{
+  input: DecreaseCartItemInput;
+}>;
+
+
+export type DecreaseCartItemMutation = { __typename?: 'Mutation', decreaseCartItem?: { __typename?: 'Cart', id: string, totalItems: number, subTotal: { __typename?: 'Money', formatted: string }, items: Array<{ __typename?: 'CartItem', id: string, name: string, description?: string | null, image?: string | null, quantity: number, unitTotal: { __typename?: 'Money', formatted: string, amount: number }, lineTotal: { __typename?: 'Money', formatted: string, amount: number } }> } | null };
+
 export type GetCartQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
 export type GetCartQuery = { __typename?: 'Query', cart?: { __typename?: 'Cart', id: string, totalItems: number, subTotal: { __typename?: 'Money', formatted: string }, items: Array<{ __typename?: 'CartItem', id: string, name: string, description?: string | null, image?: string | null, quantity: number, unitTotal: { __typename?: 'Money', formatted: string, amount: number }, lineTotal: { __typename?: 'Money', formatted: string, amount: number } }> } | null };
+
+export type IncreaseCartItemMutationVariables = Exact<{
+  input: IncreaseCartItemInput;
+}>;
+
+
+export type IncreaseCartItemMutation = { __typename?: 'Mutation', increaseCartItem?: { __typename?: 'Cart', id: string, totalItems: number, subTotal: { __typename?: 'Money', formatted: string }, items: Array<{ __typename?: 'CartItem', id: string, name: string, description?: string | null, image?: string | null, quantity: number, unitTotal: { __typename?: 'Money', formatted: string, amount: number }, lineTotal: { __typename?: 'Money', formatted: string, amount: number } }> } | null };
 
 
 
@@ -214,7 +228,7 @@ export type ResolversTypes = {
   CartItem: ResolverTypeWrapper<CartItemModel>;
   CheckoutSession: ResolverTypeWrapper<CheckoutSession>;
   CreateCheckoutSessionInput: CreateCheckoutSessionInput;
-  DecreaseCartItem: DecreaseCartItem;
+  DecreaseCartItemInput: DecreaseCartItemInput;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   IncreaseCartItemInput: IncreaseCartItemInput;
   Int: ResolverTypeWrapper<Scalars['Int']>;
@@ -233,7 +247,7 @@ export type ResolversParentTypes = {
   CartItem: CartItemModel;
   CheckoutSession: CheckoutSession;
   CreateCheckoutSessionInput: CreateCheckoutSessionInput;
-  DecreaseCartItem: DecreaseCartItem;
+  DecreaseCartItemInput: DecreaseCartItemInput;
   ID: Scalars['ID'];
   IncreaseCartItemInput: IncreaseCartItemInput;
   Int: Scalars['Int'];
@@ -354,6 +368,39 @@ export function useAddToCartMutation(baseOptions?: Apollo.MutationHookOptions<Ad
 export type AddToCartMutationHookResult = ReturnType<typeof useAddToCartMutation>;
 export type AddToCartMutationResult = Apollo.MutationResult<AddToCartMutation>;
 export type AddToCartMutationOptions = Apollo.BaseMutationOptions<AddToCartMutation, AddToCartMutationVariables>;
+export const DecreaseCartItemDocument = gql`
+    mutation decreaseCartItem($input: DecreaseCartItemInput!) {
+  decreaseCartItem(input: $input) {
+    ...Cart
+  }
+}
+    ${CartFragmentDoc}`;
+export type DecreaseCartItemMutationFn = Apollo.MutationFunction<DecreaseCartItemMutation, DecreaseCartItemMutationVariables>;
+
+/**
+ * __useDecreaseCartItemMutation__
+ *
+ * To run a mutation, you first call `useDecreaseCartItemMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDecreaseCartItemMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [decreaseCartItemMutation, { data, loading, error }] = useDecreaseCartItemMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useDecreaseCartItemMutation(baseOptions?: Apollo.MutationHookOptions<DecreaseCartItemMutation, DecreaseCartItemMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DecreaseCartItemMutation, DecreaseCartItemMutationVariables>(DecreaseCartItemDocument, options);
+      }
+export type DecreaseCartItemMutationHookResult = ReturnType<typeof useDecreaseCartItemMutation>;
+export type DecreaseCartItemMutationResult = Apollo.MutationResult<DecreaseCartItemMutation>;
+export type DecreaseCartItemMutationOptions = Apollo.BaseMutationOptions<DecreaseCartItemMutation, DecreaseCartItemMutationVariables>;
 export const GetCartDocument = gql`
     query GetCart($id: ID!) {
   cart(id: $id) {
@@ -389,3 +436,36 @@ export function useGetCartLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Ge
 export type GetCartQueryHookResult = ReturnType<typeof useGetCartQuery>;
 export type GetCartLazyQueryHookResult = ReturnType<typeof useGetCartLazyQuery>;
 export type GetCartQueryResult = Apollo.QueryResult<GetCartQuery, GetCartQueryVariables>;
+export const IncreaseCartItemDocument = gql`
+    mutation increaseCartItem($input: IncreaseCartItemInput!) {
+  increaseCartItem(input: $input) {
+    ...Cart
+  }
+}
+    ${CartFragmentDoc}`;
+export type IncreaseCartItemMutationFn = Apollo.MutationFunction<IncreaseCartItemMutation, IncreaseCartItemMutationVariables>;
+
+/**
+ * __useIncreaseCartItemMutation__
+ *
+ * To run a mutation, you first call `useIncreaseCartItemMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useIncreaseCartItemMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [increaseCartItemMutation, { data, loading, error }] = useIncreaseCartItemMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useIncreaseCartItemMutation(baseOptions?: Apollo.MutationHookOptions<IncreaseCartItemMutation, IncreaseCartItemMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<IncreaseCartItemMutation, IncreaseCartItemMutationVariables>(IncreaseCartItemDocument, options);
+      }
+export type IncreaseCartItemMutationHookResult = ReturnType<typeof useIncreaseCartItemMutation>;
+export type IncreaseCartItemMutationResult = Apollo.MutationResult<IncreaseCartItemMutation>;
+export type IncreaseCartItemMutationOptions = Apollo.BaseMutationOptions<IncreaseCartItemMutation, IncreaseCartItemMutationVariables>;

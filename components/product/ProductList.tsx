@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ProductItem } from "./ProductItem";
 
-import type { Product } from "../lib/products";
+import type { Product } from "lib/products";
 
 export function ProductList({ products }: { products: Product[] }) {
   return (

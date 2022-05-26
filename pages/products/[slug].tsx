@@ -1,6 +1,6 @@
-import { Header } from "../../components/Header";
-import { ProductDetail } from "../../components/ProductDetail";
-import { Product, products } from "../../lib/products";
+import { Header } from "components/ui/Header";
+import { ProductDetail } from "components/product/ProductDetail";
+import { Product, products } from "lib/products";
 
 import type {
   GetServerSideProps,

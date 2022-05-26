@@ -1,12 +1,13 @@
-import { CartFragment } from "../types";
 import { CartItem } from "./CartItem";
+
+import type { CartFragment } from "types";
 
 export function CartDetail({ cart }: { cart?: CartFragment | null }) {
   return (
     <div>
       <div className="space-y-8 relative">
         {cart?.items.map((item) => (
-          <CartItem key={item.id} item={item} />
+          <CartItem key={item.id} item={item} cartId={cart.id} />
         ))}
       </div>
       <div className="border-t my-4 border-neutral-700 pt-4">
