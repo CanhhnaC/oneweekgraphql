@@ -2,7 +2,6 @@ import Image from "next/image";
 import { MinusIcon } from "@components/icons/MinusIcon";
 import { PlusIcon } from "@components/icons/PlusIcon";
 import { CloseIcon } from "@components/icons/CloseIcon";
-
 import {
   CartItem,
   GetCartDocument,

@@ -132,6 +132,13 @@ export type AddToCartMutation = { __typename?: 'Mutation', addItem?: { __typenam
 
 export type CartFragment = { __typename?: 'Cart', id: string, totalItems: number, subTotal: { __typename?: 'Money', formatted: string }, items: Array<{ __typename?: 'CartItem', id: string, name: string, description?: string | null, image?: string | null, quantity: number, unitTotal: { __typename?: 'Money', formatted: string, amount: number }, lineTotal: { __typename?: 'Money', formatted: string, amount: number } }> };
 
+export type CreateCheckoutSessionMutationVariables = Exact<{
+  input: CreateCheckoutSessionInput;
+}>;
+
+
+export type CreateCheckoutSessionMutation = { __typename?: 'Mutation', createCheckoutSession?: { __typename?: 'CheckoutSession', id: string, url?: string | null } | null };
+
 export type DecreaseCartItemMutationVariables = Exact<{
   input: DecreaseCartItemInput;
 }>;
@@ -375,6 +382,40 @@ export function useAddToCartMutation(baseOptions?: Apollo.MutationHookOptions<Ad
 export type AddToCartMutationHookResult = ReturnType<typeof useAddToCartMutation>;
 export type AddToCartMutationResult = Apollo.MutationResult<AddToCartMutation>;
 export type AddToCartMutationOptions = Apollo.BaseMutationOptions<AddToCartMutation, AddToCartMutationVariables>;
+export const CreateCheckoutSessionDocument = gql`
+    mutation CreateCheckoutSession($input: CreateCheckoutSessionInput!) {
+  createCheckoutSession(input: $input) {
+    id
+    url
+  }
+}
+    `;
+export type CreateCheckoutSessionMutationFn = Apollo.MutationFunction<CreateCheckoutSessionMutation, CreateCheckoutSessionMutationVariables>;
+
+/**
+ * __useCreateCheckoutSessionMutation__
+ *
+ * To run a mutation, you first call `useCreateCheckoutSessionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCheckoutSessionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCheckoutSessionMutation, { data, loading, error }] = useCreateCheckoutSessionMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateCheckoutSessionMutation(baseOptions?: Apollo.MutationHookOptions<CreateCheckoutSessionMutation, CreateCheckoutSessionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateCheckoutSessionMutation, CreateCheckoutSessionMutationVariables>(CreateCheckoutSessionDocument, options);
+      }
+export type CreateCheckoutSessionMutationHookResult = ReturnType<typeof useCreateCheckoutSessionMutation>;
+export type CreateCheckoutSessionMutationResult = Apollo.MutationResult<CreateCheckoutSessionMutation>;
+export type CreateCheckoutSessionMutationOptions = Apollo.BaseMutationOptions<CreateCheckoutSessionMutation, CreateCheckoutSessionMutationVariables>;
 export const DecreaseCartItemDocument = gql`
     mutation decreaseCartItem($input: DecreaseCartItemInput!) {
   decreaseCartItem(input: $input) {
