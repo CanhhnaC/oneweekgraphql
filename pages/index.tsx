@@ -1,8 +1,8 @@
 import { Header } from "../components/Header";
 import { Product, products } from "../lib/products";
+import { ProductList } from "../components/ProductList";
 
 import type { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
-import { ProductList } from "../components/ProductList";
 
 const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   products,
