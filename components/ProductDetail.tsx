@@ -1,8 +1,31 @@
+import { getCookie } from "cookies-next";
+import { GetCartDocument, useAddToCartMutation } from "../types";
 import { ProductItem } from "./ProductItem";
 
 import type { Product } from "../lib/products";
 
 export function ProductDetail({ product }: { product: Product | null }) {
+  const cartId = String(getCookie("cartId"));
+  const [addToCart, { loading }] = useAddToCartMutation({
+    refetchQueries: [GetCartDocument],
+  });
+
+  function handleAddToCart(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    addToCart({
+      variables: {
+        input: {
+          cartId,
+          id: product!.id,
+          name: product!.title,
+          description: product!.body,
+          price: product!.price,
+          image: product!.src,
+        },
+      },
+    });
+  }
+  
   if (!product) {
     return null;
   }
@@ -13,7 +36,15 @@ export function ProductDetail({ product }: { product: Product | null }) {
         <ProductItem product={product} />
       </div>
       <div className="p-8 space-y-4">
-        <div dangerouslySetInnerHTML={{ __html: product.body }} />
+        <form className="p-8 space-y-4" onSubmit={handleAddToCart}>
+          <div dangerouslySetInnerHTML={{ __html: product.body }} />
+          <button
+            className="px-6 py-4 bg-black rounded w-full text-white hover:bg-white hover:text-black border border-black uppercase"
+            type="submit"
+          >
+            {loading ? "Adding to cart..." : "Add to cart"}
+          </button>
+        </form>
       </div>
     </main>
   );
