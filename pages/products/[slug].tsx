@@ -1,8 +1,7 @@
 import { Header } from "components/ui/Header";
 import { ProductDetail } from "components/product/ProductDetail";
 import { Product, products } from "lib/products";
-
-import type {
+import {
   GetServerSideProps,
   InferGetServerSidePropsType,
   NextPage,
@@ -19,7 +18,7 @@ const ProductPage: NextPage<
 
 export const getServerSideProps: GetServerSideProps<{
   product: Product | null;
-}> = async ({ _req, _res, query }) => {
+}> = async ({ req, res, query }) => {
   const product =
     products.find((product) => product.slug === query.slug) || null;
   return { props: { product } };
