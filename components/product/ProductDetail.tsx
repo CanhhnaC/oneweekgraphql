@@ -1,5 +1,5 @@
 import { getCookie } from "cookies-next";
-import { GetCartDocument, useAddToCartMutation } from "types";
+import { GetCartDocument, useAddToCartMutation } from "@@types";
 import { ProductItem } from "./ProductItem";
 
 import type { Product } from "lib/products";

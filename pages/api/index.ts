@@ -10,7 +10,7 @@ import { products } from "lib/products";
 
 import type { PrismaClient } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { Resolvers } from "types";
+import type { Resolvers } from "@@types";
 
 const currencyCode = "USD";
 

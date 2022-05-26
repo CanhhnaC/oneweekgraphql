@@ -1,5 +1,5 @@
 import { getCartId } from "../lib/cart.client";
-import { useGetCartQuery } from "../types";
+import { useGetCartQuery } from "@@types";
 import { Header } from "components/ui/Header";
 import { CartDetail } from "components/cart/CartDetail";
 

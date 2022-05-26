@@ -1,6 +1,6 @@
 import { CartItem } from "./CartItem";
 
-import type { CartFragment } from "types";
+import type { CartFragment } from "@@types";
 
 export function CartDetail({ cart }: { cart?: CartFragment | null }) {
   return (

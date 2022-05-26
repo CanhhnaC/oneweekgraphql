@@ -153,6 +153,13 @@ export type IncreaseCartItemMutationVariables = Exact<{
 
 export type IncreaseCartItemMutation = { __typename?: 'Mutation', increaseCartItem?: { __typename?: 'Cart', id: string, totalItems: number, subTotal: { __typename?: 'Money', formatted: string }, items: Array<{ __typename?: 'CartItem', id: string, name: string, description?: string | null, image?: string | null, quantity: number, unitTotal: { __typename?: 'Money', formatted: string, amount: number }, lineTotal: { __typename?: 'Money', formatted: string, amount: number } }> } | null };
 
+export type RemoveFromCartMutationVariables = Exact<{
+  input: RemoveFromCartInput;
+}>;
+
+
+export type RemoveFromCartMutation = { __typename?: 'Mutation', removeItem?: { __typename?: 'Cart', id: string, totalItems: number, subTotal: { __typename?: 'Money', formatted: string }, items: Array<{ __typename?: 'CartItem', id: string, name: string, description?: string | null, image?: string | null, quantity: number, unitTotal: { __typename?: 'Money', formatted: string, amount: number }, lineTotal: { __typename?: 'Money', formatted: string, amount: number } }> } | null };
+
 
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -469,3 +476,36 @@ export function useIncreaseCartItemMutation(baseOptions?: Apollo.MutationHookOpt
 export type IncreaseCartItemMutationHookResult = ReturnType<typeof useIncreaseCartItemMutation>;
 export type IncreaseCartItemMutationResult = Apollo.MutationResult<IncreaseCartItemMutation>;
 export type IncreaseCartItemMutationOptions = Apollo.BaseMutationOptions<IncreaseCartItemMutation, IncreaseCartItemMutationVariables>;
+export const RemoveFromCartDocument = gql`
+    mutation removeFromCart($input: RemoveFromCartInput!) {
+  removeItem(input: $input) {
+    ...Cart
+  }
+}
+    ${CartFragmentDoc}`;
+export type RemoveFromCartMutationFn = Apollo.MutationFunction<RemoveFromCartMutation, RemoveFromCartMutationVariables>;
+
+/**
+ * __useRemoveFromCartMutation__
+ *
+ * To run a mutation, you first call `useRemoveFromCartMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveFromCartMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeFromCartMutation, { data, loading, error }] = useRemoveFromCartMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useRemoveFromCartMutation(baseOptions?: Apollo.MutationHookOptions<RemoveFromCartMutation, RemoveFromCartMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RemoveFromCartMutation, RemoveFromCartMutationVariables>(RemoveFromCartDocument, options);
+      }
+export type RemoveFromCartMutationHookResult = ReturnType<typeof useRemoveFromCartMutation>;
+export type RemoveFromCartMutationResult = Apollo.MutationResult<RemoveFromCartMutation>;
+export type RemoveFromCartMutationOptions = Apollo.BaseMutationOptions<RemoveFromCartMutation, RemoveFromCartMutationVariables>;

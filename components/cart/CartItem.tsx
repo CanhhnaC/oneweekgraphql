@@ -1,13 +1,15 @@
 import Image from "next/image";
-import { MinusIcon } from "components/icons/MinusIcon";
-import { PlusIcon } from "components/icons/PlusIcon";
+import { MinusIcon } from "@components/icons/MinusIcon";
+import { PlusIcon } from "@components/icons/PlusIcon";
+import { CloseIcon } from "@components/icons/CloseIcon";
 
 import {
   CartItem,
   GetCartDocument,
   useDecreaseCartItemMutation,
   useIncreaseCartItemMutation,
-} from "types";
+  useRemoveFromCartMutation,
+} from "@@types";
 
 export function CartItem({ item, cartId }: { item: CartItem; cartId: string }) {
   const [increaseCartItem, { loading: increasingCartItem }] =
@@ -20,6 +22,11 @@ export function CartItem({ item, cartId }: { item: CartItem; cartId: string }) {
       refetchQueries: [GetCartDocument],
     });
 
+  const [removeFromCart, { loading: removingFromCart }] =
+    useRemoveFromCartMutation({
+      refetchQueries: [GetCartDocument],
+    });
+
   function handleClickIncrease() {
     increaseCartItem({
       variables: { input: { id: item.id, cartId } },
@@ -28,6 +35,12 @@ export function CartItem({ item, cartId }: { item: CartItem; cartId: string }) {
 
   function handleClickDecrease() {
     decreaseCartItem({
+      variables: { input: { id: item.id, cartId } },
+    });
+  }
+
+  function handleClickRemove() {
+    removeFromCart({
       variables: { input: { id: item.id, cartId } },
     });
   }
@@ -48,6 +61,13 @@ export function CartItem({ item, cartId }: { item: CartItem; cartId: string }) {
         </div>
       </div>
       <div className="flex gap-2">
+        <button
+          onClick={handleClickRemove}
+          disabled={removingFromCart}
+          className="p-1 font-light border border-neutral-700  hover:bg-black hover:text-white"
+        >
+          <CloseIcon />
+        </button>
         <div className="flex-1 flex">
           <div className="px-2 py-1 font-light border border-t-neutral-700 flex-1">
             {item.quantity}
